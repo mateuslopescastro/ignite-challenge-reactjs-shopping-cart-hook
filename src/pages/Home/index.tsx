@@ -1,54 +1,54 @@
-import { useState, useEffect } from "react";
-import { MdAddShoppingCart } from "react-icons/md";
+import { useState, useEffect } from "react"
+import { MdAddShoppingCart } from "react-icons/md"
 
-import { useCart } from "../../hooks/useCart";
-import { api } from "../../services/api";
-import { formatPrice } from "../../util/format";
+import { useCart } from "../../hooks/useCart"
+import { api } from "../../services/api"
+import { formatPrice } from "../../util/format"
 
-import { ProductList } from "./styles";
+import { ProductList } from "./styles"
 
 interface Product {
-  id: number;
-  title: string;
-  price: number;
-  image: string;
+  id: number
+  title: string
+  price: number
+  image: string
 }
 
 interface ProductFormatted extends Product {
-  priceFormatted: string;
+  priceFormatted: string
 }
 
 interface CartItemsAmount {
-  [key: number]: number;
+  [key: number]: number
 }
 
-const Home = (): JSX.Element => {
-  const [products, setProducts] = useState<ProductFormatted[]>([]);
-  const { addProduct, cart } = useCart();
+export function Home() {
+  const [products, setProducts] = useState<ProductFormatted[]>([])
+  const { addProduct, cart } = useCart()
 
   const cartItemsAmount = cart.reduce((sumAmount, product) => {
-    return { ...sumAmount, [product.id]: product.amount };
-  }, {} as CartItemsAmount);
+    return { ...sumAmount, [product.id]: product.amount }
+  }, {} as CartItemsAmount)
 
   useEffect(() => {
     async function loadProducts() {
-      const { data: products } = await api.get<Product[]>("/products");
+      const { data: products } = await api.get<Product[]>("/products")
 
       const formattedProducts: ProductFormatted[] = products.map((product) => {
         return {
           ...product,
-          priceFormatted: formatPrice(product.price),
-        };
-      });
+          priceFormatted: formatPrice(product.price)
+        }
+      })
 
-      setProducts(formattedProducts);
+      setProducts(formattedProducts)
     }
 
-    loadProducts();
-  }, []);
+    loadProducts()
+  }, [])
 
   function handleAddProduct(id: number) {
-    addProduct(id);
+    addProduct(id)
   }
 
   return (
@@ -73,7 +73,5 @@ const Home = (): JSX.Element => {
         </li>
       ))}
     </ProductList>
-  );
-};
-
-export default Home;
+  )
+}

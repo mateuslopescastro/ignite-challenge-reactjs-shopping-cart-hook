@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
-import { MdShoppingBasket } from "react-icons/md";
+import { Link } from "react-router-dom"
+import { MdShoppingBasket } from "react-icons/md"
 
-import logo from "../../assets/images/logo.svg";
-import { useCart } from "../../hooks/useCart";
+import logo from "../../assets/images/logo.svg"
+import { useCart } from "../../hooks/useCart"
 
-import { Container, Cart } from "./styles";
+import { Container, Cart } from "./styles"
 
-const Header = (): JSX.Element => {
-  const { cart } = useCart();
-  const cartSize = cart.length;
+export function Header() {
+  const { cart } = useCart()
+  const cartSize = cart.length
 
   return (
     <Container>
@@ -27,7 +27,5 @@ const Header = (): JSX.Element => {
         <MdShoppingBasket size={36} color="#FFF" />
       </Cart>
     </Container>
-  );
-};
-
-export default Header;
+  )
+}
